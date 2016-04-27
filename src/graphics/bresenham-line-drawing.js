@@ -2,6 +2,15 @@
   'use strict';
 
   /**
+   * Draws (prints) the given coordinates
+   * @param  {number} x The first coordinate of the point
+   * @param  {number} y The second coordinate of the point
+   */
+  function drawPoint(x, y) {
+    console.log(x, y);
+  }
+
+  /**
    * Bresenham's line drawing algorithm.
    * It has complexity O(n)
    * @param  {number} x1 The first coordinate of the beginning of the line
@@ -11,7 +20,7 @@
    * @param  {function} draw Optional custom drawing function.
    */
   function drawLine(x1, y1, x2, y2, draw) {
-    drawPoint = draw || drawPoint;
+    var drawPointStrategy = draw || drawPoint;
     var dx = Math.abs(x2 - x1);
     var dy = Math.abs(y2 - y1);
     var cx = (x1 < x2) ? 1 : -1;
@@ -20,7 +29,7 @@
     var doubledError;
 
     while (x1 !== x2 || y1 !== y2) {
-      drawPoint(x1, y1);
+      drawPointStrategy(x1, y1);
       doubledError = error + error;
       if (doubledError > -dy) {
         error -= dy;
@@ -31,15 +40,6 @@
         y1 += cy;
       }
     }
-  }
-
-  /**
-   * Draws (prints) the given coordinates
-   * @param  {number} x The first coordinate of the point
-   * @param  {number} y The second coordinate of the point
-   */
-  function drawPoint(x, y) {
-    console.log(x, y);
   }
 
   exports.drawLine = drawLine;
